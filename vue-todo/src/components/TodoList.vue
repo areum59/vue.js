@@ -2,8 +2,15 @@
     <div>
         <ul>
             <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem" class="shadow">
-                {{ todoItem }}
-                <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">delete</span>
+                <!-- check 버튼 -->
+                <span class="checkBtn" v-bind:class="{checkBtnCompleted: todoItem.completed}" v-on:click="toggleComplete">
+                    <font-awesome-icon icon="fas fa-check" />
+                </span>
+                <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
+                <!-- list 삭제 버튼 -->
+                <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
+                    <font-awesome-icon icon="fas fa-trash-alt" />
+                </span>
             </li>
             <!-- 에러가 나는 경우 v-for를 사용할 때 항상 v-bind:key를 사용해야 한다는 이유가 있는데
             vacode에서만 뜨는 에러로 무시해도 됨. (다른 에디터에서는 표시되지 않음) -->
@@ -23,15 +30,16 @@ export default {
             console.log(todoItem, index);
             localStorage.removeItem(todoItem);
             this.todoItems.splice(index, 1);
-        }
+        },
+        toggleComplete: function(){}
     },
     created: function(){
         if(localStorage.length > 0) {
             for (var i = 0; i < localStorage.length; i++){
                 if (localStorage.key(i) !== 'loglevel:webpack-dev-server'){
-                    this.todoItems.push(localStorage.key(i));
+                    this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+                    // this.todoItems.push(localStorage.key(i));
                 }
-                // console.log(localStorage.key(i));
             }
         }
     }
