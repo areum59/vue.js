@@ -1,6 +1,7 @@
 <template>
     <div class="inputBox shadow">
         <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo">
+        <!-- v-model : 입력 값을 vue인스턴스에 즉각 맵핑 -->
         <button class="addContainer" v-on:click="addTodo">
             <font-awesome-icon icon="fas fa-plus" />
         </button>
@@ -21,10 +22,9 @@ export default {
         addTodo: function(){
             if(this.newTodoItem !== ''){
                 var obj = {completed: false, item: this.newTodoItem};
-                // 저장하는 로직
+                // check box에 진입을 했는지 체크함.
                 localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
-                // localStorage.setItem(key,value);
-                // .stringify() : 오브젝트인 값을 스트링으로 담는 API
+                // .stringify() : 오브젝트를 string로 변환
                 this.clearInput();
             }
         },
