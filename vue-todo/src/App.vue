@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style>
-body {text-align: center; background-color: #fff;}
+body {text-align: center; background-color: #f8f8f8;}
 input {border-style: groove; width: 200px;}
 button {border-style: groove;}
 
