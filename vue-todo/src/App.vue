@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <TodoHeader></TodoHeader>
-    <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
     <!-- v-on:="" 하위 컴포넌트에서 발생시킨 이벤트 이름="현재 컴포넌트의 메서드 이름" -->
-    <TodoList v-bind:propsdata="todoItems"></TodoList>
     <!-- v-bind="" 내려보낼 데이터 속성 이름="현재 위치의 컴포넌트" -->
+    <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
+    <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem"></TodoList>
     <TodoFooter></TodoFooter>
   </div>
 </template>
@@ -29,6 +29,11 @@ export default {
       localStorage.setItem(todoItem, JSON.stringify(obj));
       // .stringify() : 오브젝트를 string로 변환
       this.todoItems.push(obj);
+    },
+    removeOneItem: function(todoItem, index){
+      localStorage.removeItem(todoItem.item);
+      this.todoItems.splice(index, 1);
+      // splice() : 배열의 삭제 또는 교체하거나 새 요소를 추가
     }
   },
   created: function(){
