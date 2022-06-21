@@ -21,10 +21,8 @@ export default {
     methods: {
         addTodo: function(){
             if(this.newTodoItem !== ''){
-                var obj = {completed: false, item: this.newTodoItem};
-                // check box에 진입을 했는지 체크함.
-                localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
-                // .stringify() : 오브젝트를 string로 변환
+                this.$emit('addTodoItem', this.newTodoItem);
+                // this.$emit('event-name', 인자1, 인자2, ....);
                 this.clearInput();
             }
         },
