@@ -32,12 +32,7 @@ export default {
             this.$emit('removeItem', todoItem, index);
         },
         toggleComplete: function(todoItem, index){
-            console.log(todoItem, index)
-            todoItem.completed = !todoItem.completed;
-            // 바뀐 설정값을 저장하기 위해서는 새로운 정보로 업데이트하는 속성이 없기때문에 removeItem()으로 지운 후 동일하게 세팅하여 바뀐내용을 저장
-            // 즉, 로컬 스토리지의 데이터를 갱신하는 DOM
-            localStorage.removeItem(todoItem.item);
-            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+            this.$emit('toggleItem', todoItem, index);
         }
     }
 };

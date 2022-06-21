@@ -4,7 +4,7 @@
     <!-- v-on:="" 하위 컴포넌트에서 발생시킨 이벤트 이름="현재 컴포넌트의 메서드 이름" -->
     <!-- v-bind="" 내려보낼 데이터 속성 이름="현재 위치의 컴포넌트" -->
     <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
-    <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem"></TodoList>
+    <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem" v-on:toggleItem="toggleOneItem"></TodoList>
     <TodoFooter></TodoFooter>
   </div>
 </template>
@@ -34,6 +34,15 @@ export default {
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1);
       // splice() : 배열의 삭제 또는 교체하거나 새 요소를 추가
+    },
+    toggleOneItem: function(todoItem, index){
+      this.todoItems[index].completed = !this.todoItems[index].completed
+
+      // 바뀐 설정값을 저장하기 위해서는 새로운 정보로 업데이트하는 속성이 없기때문에
+      // removeItem()으로 지운 후 동일하게 세팅하여 바뀐내용을 저장
+      // 즉, 로컬 스토리지의 데이터를 갱신
+      localStorage.removeItem(todoItem.item);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     }
   },
   created: function(){
