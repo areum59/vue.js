@@ -5,7 +5,7 @@
     <!-- v-bind="" 내려보낼 데이터 속성 이름="현재 위치의 컴포넌트" -->
     <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
     <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem" v-on:toggleItem="toggleOneItem"></TodoList>
-    <TodoFooter></TodoFooter>
+    <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter>
   </div>
 </template>
 
@@ -37,12 +37,16 @@ export default {
     },
     toggleOneItem: function(todoItem, index){
       this.todoItems[index].completed = !this.todoItems[index].completed
-
+      localStorage.removeItem(todoItem.item);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
       // 바뀐 설정값을 저장하기 위해서는 새로운 정보로 업데이트하는 속성이 없기때문에
       // removeItem()으로 지운 후 동일하게 세팅하여 바뀐내용을 저장
       // 즉, 로컬 스토리지의 데이터를 갱신
-      localStorage.removeItem(todoItem.item);
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    },
+    clearAllItems: function(){
+      localStorage.clear();
+      // .clear() : 로컬스토리지에 있는 모든 내용을 지우는 API
+      this.todoItems = [];
     }
   },
   created: function(){

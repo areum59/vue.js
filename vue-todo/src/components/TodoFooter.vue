@@ -10,8 +10,7 @@
 export default {
     methods: {
         clearTodo: function(){
-            localStorage.clear();
-            // .clear() : 로컬스토리지에 있는 모든 내용을 지우는 API
+            this.$emit('clearAll');
         }
     }
 };
